@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">MMT Shop</h1>
+    <p>Written by Punprom Kasemsant</p>
+</div>
+
+<div class="container">
+    
+    <div class="row">
+        
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Sku</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <th scope="row">@product.Sku</th>
+                    <td>@product.Name</td>
+                    <td>@product.CategoryName</td>
+                    <td>@product.Price.ToString("C0")</td>
+                    <td>
+                        <a class="btm btn-info" asp-page="/Products/Details/@product.Id">details</a>
+                    </td>
+                </tr>
+
+            }
+            
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
