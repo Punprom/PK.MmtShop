@@ -29,17 +29,6 @@ namespace PK.MmtShop.Web.Services
         }
 
 
-        public async Task<bool> DeleteProductAsync(Guid productId)
-        {
-            var apiConfig = _configuration.GetSection("ProductApi");
-            var apiCall = apiConfig["DeleteItem"];
-            apiCall = apiCall.Replace("{productid}", productId.ToString());
-
-            var responses = await _httpClient.DeleteAsync(apiCall);
-
-            return responses.IsSuccessStatusCode;
-        }
-
         public async Task<IEnumerable<ProductModel>> GetAllProductsAsync()
         {
             var list = new List<ProductModel>();
@@ -134,5 +123,14 @@ namespace PK.MmtShop.Web.Services
             await _httpClient.PutAsync(apiCall, productAsJson);
         }
 
+        public async Task DeleteProductAsync(Guid productId)
+        {
+            var apiConfig = _configuration.GetSection("ProductApi");
+            var apiCall = apiConfig["DeleteItem"];
+            apiCall = apiCall.Replace("{productid}", productId.ToString());
+
+            await _httpClient.DeleteAsync(apiCall);
+
+        }
     }
 }

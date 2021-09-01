@@ -66,26 +66,40 @@ namespace PK.MmtShop.Web.Services
             return list.AsEnumerable();
         }
 
-        public async Task<CategoryRangeModel> GetCategoryAsync(int categoryId)
+        public async Task<CategoryModel> GetCategoryAsync(int categoryId)
         {
             var apiCallConfig = _configuration.GetSection("CategoryApis");
             var apiCall = apiCallConfig["GetSingle"];
             apiCall = apiCall.Replace("{categoryid}", categoryId.ToString());
 
-            var result = await JsonSerializer.DeserializeAsync<CategoryRangeDto>(
+            var result = await JsonSerializer.DeserializeAsync<CategoryDto>(
                 await _httpClient.GetStreamAsync(apiCall),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }
                 );
             if (result == null)
                 return null;
+            var category = _mapper.Map<CategoryModel>(result);
+
+            return category;
+        }
+
+        public async Task<CategoryRangeModel> GetCategoryRange(int categoryId)
+        {
+           var apiCallConfig = _configuration.GetSection("CategoryRangesApi");
+            var apiCall = apiCallConfig["GetByCategory"];
+            apiCall = apiCall.Replace("{categoryid}", categoryId.ToString());
+
+            var result = await JsonSerializer.DeserializeAsync<CategoryRangeDto>(
+                await _httpClient.GetStreamAsync(apiCall),
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }
+            );
+
+            if (result == null)
+                return null;
+
             var range = _mapper.Map<CategoryRangeModel>(result);
 
             return range;
-        }
-
-        public Task<CategoryRangeDto> GetCategoryRange(int categoryId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
