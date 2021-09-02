@@ -213,7 +213,7 @@ namespace PK.MmtShop.Service.Migrations
                             Description = "SanDisk Extreme PRO 128GB SDXC Memory Card up to 170MB/s, UHS-1, Class 10, U3, V30",
                             Name = "Scandisk Extreme Pro 128GB",
                             Price = 24.99m,
-                            Sku = 0
+                            Sku = 30002
                         },
                         new
                         {
